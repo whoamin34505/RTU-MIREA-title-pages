@@ -1,14 +1,12 @@
-from docx import Document
+from docxtpl import DocxTemplate
 
-document = Document()
-document.add_heading('My Document Title', level=0) # Adds a main title
-document.add_paragraph('This is a plain paragraph of text.')
+# определяем словарь переменных контекста,  
+# которые определены в шаблоне документа DOCX
+context = {}
+context['group'] = 'ККСО-22-24'
 
-# Adding bold and italic text within a paragraph
-p = document.add_paragraph('This paragraph has ')
-p.add_run('bold text').bold = True
-p.add_run(' and ')
-p.add_run('italic text').italic = True
-
-document.save('my_document.docx')
-print("Document created successfully!")
+doc = DocxTemplate("template.docx")
+# подставляем контекст в шаблон
+doc.render(context)
+# сохраняем и смотрим, что получилось 
+doc.save("generated_docx.docx")
